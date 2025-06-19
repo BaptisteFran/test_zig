@@ -24,7 +24,7 @@ pub fn main() !void {
     // Reads second number
     try stdout.print("Choose the second number : ", .{});
     const line2 = try stdin.readUntilDelimiterOrEof(&buffer, '\n');
-    const num2 = try parseInt(line2 orelse return error.InvalidInput); // if cannot read line1, return error.InvalidInput
+    const num2 = try parseInt(line2 orelse return error.InvalidInput);
 
     // Calcul & display
     const result = switch(op_trimmed[0]) {

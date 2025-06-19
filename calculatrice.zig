@@ -18,8 +18,9 @@ pub fn main() !void {
     try stdout.print("Enter the operator (+, -, *, /) : ", .{});
     const op_line = try stdin.readUntilDelimiterOrEof(&buffer, '\n');
     const op_trimmed = std.mem.trim(u8, op_line orelse return error.InvalidInput, " \r\n");
-    if (op_trimmed.len != 1) return error.InvalidOperator;
 
+    if (op_trimmed.len != 1) return error.InvalidOperator;
+    const op_char = op_trimmed[0];
 
     // Reads second number
     try stdout.print("Choose the second number : ", .{});
@@ -27,12 +28,12 @@ pub fn main() !void {
     const num2 = try parseInt(line2 orelse return error.InvalidInput);
 
     // Calcul & display
-    const result = switch(op_trimmed[0]) {
+    const result = switch(op_char) {
         '+' => num1 + num2,
         '-' => num1 - num2,
         '*' => num1 * num2,
         '/' => if (num2 != 0 and num1 != 0) @divTrunc(num1,num2) else return error.DivideByZero,
-        else => return error.InvalidOperator,
+        else => return std.log.err("Error while trying to calculate operation : {}", .{error.InvalidOperator}),
     };
 
     try stdout.print("Result : {}\n", .{result});
